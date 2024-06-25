@@ -3,4 +3,11 @@
 
 // ========================== Device Declarations ========================== //
 
-extern vex::motor drive_left;
+extern controller controller1;
+
+extern motor driveLf;
+extern motor driveLb;
+extern motor driveRf;
+extern motor driveRb;
+extern vex::motor_group drive_left;
+extern vex::motor_group drive_right;
