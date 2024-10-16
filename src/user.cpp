@@ -9,7 +9,7 @@ bool l1_previous_press = false;
 bool clamp_on = false;
 bool lift_on = false;
 bool push_on = false;
-DirectionType intake_direction = forward;
+//DirectionType intake_direction = forward;
 bool intake_on = false;
 
 // ========================= User Control Functions ========================= //
@@ -31,6 +31,7 @@ void user() {
     arcade_drive(left_x, left_y, right_x, right_y);
 
     if (controller1.ButtonA.pressing()) {
+        //cout << "a";
         if (!a_previous_press) {
             clamp_on = !clamp_on;
         }
@@ -40,6 +41,7 @@ void user() {
     a_previous_press = controller1.ButtonA.pressing();
 
     if (controller1.ButtonB.pressing() && !b_previous_press) {
+        //cout << "b";
         lift_on = !lift_on;
         intake_lift.set(lift_on);
     }
@@ -51,7 +53,7 @@ void user() {
     }
     y_previous_press = controller1.ButtonY.pressing();
 
-    if (controller1.ButtonR1.pressing() && !r1_previous_press) {
+    /*if (controller1.ButtonR1.pressing() && !r1_previous_press) {
         intake_direction = forward;
         intake_on = !intake_on;
     }
@@ -65,5 +67,5 @@ void user() {
         intake.spin(intake_direction, 200, rpm);
     } else {
         intake.stop();
-    }
+    }*/
 }
