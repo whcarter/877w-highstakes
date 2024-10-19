@@ -14,7 +14,6 @@ extern vex::motor_group drive_left;
 extern vex::motor_group drive_right;
 extern motor intake;
 
-extern digital_out clamp_left;
-extern digital_out clamp_right;
+extern digital_out clamp;
 extern digital_out intake_lift;
 extern digital_out pulldown_bar;

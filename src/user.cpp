@@ -37,8 +37,7 @@ void user()
         {
             clamp_on = !clamp_on;
         }
-        clamp_left.set(clamp_on);
-        clamp_right.set(clamp_on);
+        clamp.set(clamp_on);
     }
     a_previous_press = controller1.ButtonA.pressing();
 
