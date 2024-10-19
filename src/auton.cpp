@@ -1,5 +1,12 @@
 #include "main.h"
 
+PIDController chassis;
+
+void move(double power) {
+    drive_left.spin(forward, power, volt);
+    drive_right.spin(forward, power, volt);
+}
+
 void drive(int distance, int power = 12) {
     double revs = distance / (3.14 * 4) / (2.333);
     drive_left.setPosition(0, turns);
@@ -16,6 +23,10 @@ void drive(int distance, int power = 12) {
     }
     drive_left.stop();
     drive_right.stop();
+}
+
+void pid_drive(int distance) {
+    
 }
 
 void auton() {
