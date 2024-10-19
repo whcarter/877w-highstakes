@@ -19,7 +19,8 @@ void drive(int distance, int power = 12) {
 }
 
 void auton() {
-    drive(-24, 8);
+    pulldown_bar.set(true);
+    drive(-30, 4);
     wait(1000, msec);
     clamp.set(true);
     wait(1000, msec);
@@ -28,4 +29,5 @@ void auton() {
     intake.spin(forward, 12, volt);
     wait(5000, msec);
     intake.stop();
+    pulldown_bar.set(false);
 }
