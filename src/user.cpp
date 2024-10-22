@@ -16,10 +16,11 @@ const float input_exp = 2;
 
 // ========================= User Control Functions ========================= //
 
-double process_input(int value) {
-    double adjusted = (double) (value - deadzone) / (100 - deadzone);
+double process_input(int value)
+{
+    double adjusted = (double)(value - deadzone) / (100 - deadzone);
     double scaled = pow(adjusted, input_exp);
-    return value > 0 ? (scaled * 12) : -(scaled * 12);
+    return (value > 0 ? scaled : -scaled) * 12;
 }
 
 void arcade_drive(int left_x, int left_y, int right_x, int right_y)

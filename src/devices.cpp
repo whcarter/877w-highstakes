@@ -18,3 +18,7 @@ motor intake = motor(PORT11, ratio18_1, false);
 digital_out clamp = digital_out(Brain.ThreeWirePort.A);
 digital_out pulldown_bar = digital_out(Brain.ThreeWirePort.B);
 digital_out intake_lift = digital_out(Brain.ThreeWirePort.C);
+
+// Sensors
+inertial imu = inertial(PORT1);
+gps gps_sensor = gps(PORT2);

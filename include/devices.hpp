@@ -17,3 +17,6 @@ extern motor intake;
 extern digital_out clamp;
 extern digital_out intake_lift;
 extern digital_out pulldown_bar;
+
+extern inertial imu;
+extern gps gps_sensor;
