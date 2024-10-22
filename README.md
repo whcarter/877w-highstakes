@@ -8,7 +8,7 @@ View the [engineering notebook](https://docs.google.com/presentation/d/1gjdb9jKG
 - Odometry and drive PID
 
 ### Members
-Ben Black\
-Nate Black\
-Will Carter\
-Vijay Pertab\
+Ben Black
+\Nate Black
+\Will Carter
+\Vijay Pertab
