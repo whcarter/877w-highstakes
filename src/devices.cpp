@@ -15,7 +15,10 @@ motor_group drive_right = motor_group(driveRf, driveRb);
 motor intake = motor(PORT11, ratio18_1, false);
 
 // Pneumatics
-digital_out clamp_left = digital_out(Brain.ThreeWirePort.A);
-digital_out clamp_right = digital_out(Brain.ThreeWirePort.B);
+digital_out clamp = digital_out(Brain.ThreeWirePort.A);
+digital_out pulldown_bar = digital_out(Brain.ThreeWirePort.B);
 digital_out intake_lift = digital_out(Brain.ThreeWirePort.C);
-digital_out pulldown_bar = digital_out(Brain.ThreeWirePort.D);
+
+// Sensors
+inertial imu = inertial(PORT1);
+gps gps_sensor = gps(PORT2);
