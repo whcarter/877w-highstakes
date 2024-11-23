@@ -17,14 +17,6 @@ const int deadzone = 0;
 const float input_exp = 2;
 
 // ========================= User Control Functions ========================= //
-
-double process_input(int value)
-{
-    double adjusted = (double)(value - deadzone) / (100 - deadzone);
-    double scaled = pow(adjusted, input_exp);
-    return (value > 0 ? scaled : -scaled) * 12;
-}
-
 void arcade_drive(int left_x, int left_y, int right_x, int right_y)
 {
     int left = left_y + right_x;
@@ -33,8 +25,15 @@ void arcade_drive(int left_x, int left_y, int right_x, int right_y)
     drive_right.spin(forward, right, volt);
 }
 
-// ========================= Input Processor & Task ========================= //
+// ============================= Input Processor ============================ //
+double process_input(int value)
+{
+    double adjusted = (double)(value - deadzone) / (100 - deadzone);
+    double scaled = pow(adjusted, input_exp);
+    return (value > 0 ? scaled : -scaled) * 12;
+}
 
+// ================================== Task ================================== //
 void user()
 {
     int left_x = process_input(controller1.Axis4.position(percent));
