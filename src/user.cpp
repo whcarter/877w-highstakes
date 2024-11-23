@@ -83,4 +83,9 @@ void user()
     }
     down_previous_press = controller1.ButtonDown.pressing();
     intake.spin(forward, intake_power, volt);
+
+    if (controller1.ButtonR2.pressing() && controller1.ButtonL2.pressing())
+    {
+        climb_release.set(true);
+    }
 }
