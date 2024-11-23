@@ -1,5 +1,6 @@
 #include "main.h"
 
+/*
 const std::pair<double, double> left_offset = {-2.882, 0.718}; // Old: {-4.829, 1.4675}
 const std::pair<double, double> rear_offset = {1.741, 1.539};  // Old: {1.1655, 0.825}
 const double radian = 0.0174533;
@@ -17,24 +18,24 @@ double toRadians(double degrees)
 
 double left_position()
 {
-    return /*odom_left.get_position()*/;
+    return odom_left.get_position();
 }
 
 double right_position()
 {
-    return /*odom_right.get_position()*/;
+    return odom_right.get_position();
 }
 
 double rear_position()
 {
-    return /*odom_rear.get_position()*/;
+    return odom_rear.get_position();
 }
 
-void set_left(double position) /*odom_left.set_position(position)*/;
+void set_left(double position) odom_left.set_position(position);
 
-void set_right(double position) /*odom_right.set_position(position)*/;
+void set_right(double position) odom_right.set_position(position);
 
-void set_rear(double position) /*odom_rear.set_position(position)*/;
+void set_rear(double position) odom_rear.set_position(position);
 
 void odom::initialize()
 {
@@ -131,3 +132,4 @@ void odom::calibrate(double robot_x = 0, double robot_y = 0, double heading = 0)
 
 double odom::get_x() { return odom_x; }
 double odom::get_y() { return odom_y; }
+*/

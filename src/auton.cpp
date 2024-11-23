@@ -1,6 +1,6 @@
 #include "main.h"
 
-PIDController drive_pid(1.0, 0.0, 0.0, 10.0, &move, &get_position);
+// PIDController drive_pid(1.0, 0.0, 0.0, 10.0, &move, &get_position);
 
 void move(double power)
 {
@@ -43,7 +43,6 @@ void pid_drive(int distance)
 
 void auton()
 {
-    pulldown_bar.set(true);
     drive(-30, 4);
     wait(1000, msec);
     clamp.set(true);
@@ -53,5 +52,4 @@ void auton()
     intake.spin(forward, 12, volt);
     wait(5000, msec);
     intake.stop();
-    pulldown_bar.set(false);
 }

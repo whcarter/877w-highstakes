@@ -6,10 +6,12 @@ bool b_previous_press = false;
 bool y_previous_press = false;
 bool r1_previous_press = false;
 bool l1_previous_press = false;
+bool up_previous_press = false;
+bool down_previous_press = false;
 bool clamp_on = false;
 bool lift_on = false;
-bool push_on = false;
 int intake_power = 0;
+int climb_power = 0;
 
 const int deadzone = 0;
 const float input_exp = 2;
@@ -58,13 +60,6 @@ void user()
     }
     b_previous_press = controller1.ButtonB.pressing();
 
-    if (controller1.ButtonY.pressing() && !y_previous_press)
-    {
-        push_on = !push_on;
-        pulldown_bar.set(push_on);
-    }
-    y_previous_press = controller1.ButtonY.pressing();
-
     if (controller1.ButtonR1.pressing() && !r1_previous_press)
     {
         intake_power = intake_power > 0 ? 0 : 12;
@@ -75,5 +70,17 @@ void user()
         intake_power = intake_power < 0 ? 0 : -12;
     }
     l1_previous_press = controller1.ButtonL1.pressing();
+    intake.spin(forward, intake_power, volt);
+
+    if (controller1.ButtonUp.pressing() && !up_previous_press)
+    {
+        climb_power = climb_power > 0 ? 0 : 12;
+    }
+    up_previous_press = controller1.ButtonUp.pressing();
+    if (controller1.ButtonDown.pressing() && !down_previous_press)
+    {
+        climb_power = climb_power < 0 ? 0 : -12;
+    }
+    down_previous_press = controller1.ButtonDown.pressing();
     intake.spin(forward, intake_power, volt);
 }
