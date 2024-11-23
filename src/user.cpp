@@ -6,23 +6,17 @@ bool b_previous_press = false;
 bool y_previous_press = false;
 bool r1_previous_press = false;
 bool l1_previous_press = false;
+bool up_previous_press = false;
+bool down_previous_press = false;
 bool clamp_on = false;
 bool lift_on = false;
-bool push_on = false;
 int intake_power = 0;
+int climb_power = 0;
 
 const int deadzone = 0;
 const float input_exp = 2;
 
 // ========================= User Control Functions ========================= //
-
-double process_input(int value)
-{
-    double adjusted = (double)(value - deadzone) / (100 - deadzone);
-    double scaled = pow(adjusted, input_exp);
-    return (value > 0 ? scaled : -scaled) * 12;
-}
-
 void arcade_drive(int left_x, int left_y, int right_x, int right_y)
 {
     int left = left_y + right_x;
@@ -31,8 +25,15 @@ void arcade_drive(int left_x, int left_y, int right_x, int right_y)
     drive_right.spin(forward, right, volt);
 }
 
-// ========================= Input Processor & Task ========================= //
+// ============================= Input Processor ============================ //
+double process_input(int value)
+{
+    double adjusted = (double)(value - deadzone) / (100 - deadzone);
+    double scaled = pow(adjusted, input_exp);
+    return (value > 0 ? scaled : -scaled) * 12;
+}
 
+// ================================== Task ================================== //
 void user()
 {
     int left_x = process_input(controller1.Axis4.position(percent));
@@ -58,13 +59,6 @@ void user()
     }
     b_previous_press = controller1.ButtonB.pressing();
 
-    if (controller1.ButtonY.pressing() && !y_previous_press)
-    {
-        push_on = !push_on;
-        pulldown_bar.set(push_on);
-    }
-    y_previous_press = controller1.ButtonY.pressing();
-
     if (controller1.ButtonR1.pressing() && !r1_previous_press)
     {
         intake_power = intake_power > 0 ? 0 : 12;
@@ -76,4 +70,21 @@ void user()
     }
     l1_previous_press = controller1.ButtonL1.pressing();
     intake.spin(forward, intake_power, volt);
+
+    if (controller1.ButtonUp.pressing() && !up_previous_press)
+    {
+        climb_power = climb_power > 0 ? 0 : 12;
+    }
+    up_previous_press = controller1.ButtonUp.pressing();
+    if (controller1.ButtonDown.pressing() && !down_previous_press)
+    {
+        climb_power = climb_power < 0 ? 0 : -12;
+    }
+    down_previous_press = controller1.ButtonDown.pressing();
+    intake.spin(forward, intake_power, volt);
+
+    if (controller1.ButtonR2.pressing() && controller1.ButtonL2.pressing())
+    {
+        climb_release.set(true);
+    }
 }
