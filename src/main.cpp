@@ -29,7 +29,7 @@ void usercontrol(void)
   while (1)
   {
     user();
-    wait(10, msec);
+    wait(20, msec);
   }
 }
 

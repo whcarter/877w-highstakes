@@ -4,8 +4,7 @@
 enum PressType
 {
     PULSE,
-    TOGGLE,
-    HOLD
+    TOGGLE
 };
 
 enum Edge

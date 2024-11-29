@@ -38,7 +38,6 @@ void Button::find_press()
         }
         break;
     }
-    std::cout << "a: " << isPressed() << std::endl;
     previous_press = isPressed();
 }
 

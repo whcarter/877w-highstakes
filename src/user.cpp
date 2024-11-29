@@ -33,6 +33,56 @@ double process_input(int value)
     return (value > 0 ? scaled : -scaled) * 12;
 }
 
+// ============================= Button Mapping ============================= //
+void pressA(bool state)
+{
+    clamp.set(state);
+}
+void pressB(bool state)
+{
+    intake_lift.set(state);
+}
+void pressR1(bool state)
+{
+    intake_power = intake_power > 0 ? 0 : 12;
+    intake.spin(forward, intake_power, volt);
+}
+void pressL1(bool state)
+{
+    intake_power = intake_power < 0 ? 0 : -12;
+    intake.spin(forward, intake_power, volt);
+}
+void pressUp(bool state)
+{
+    climb_power = climb_power > 0 ? 0 : 12;
+    climb.spin(forward, climb_power, volt);
+}
+void pressDown(bool state)
+{
+    climb_power = climb_power > 0 ? 0 : -12;
+    climb.spin(forward, climb_power, volt);
+}
+void pressR2L2(bool state)
+{
+    climb_release.set(true);
+}
+
+bool bA() { return controller1.ButtonA.pressing(); }
+bool bB() { return controller1.ButtonB.pressing(); }
+bool bR1() { return controller1.ButtonR1.pressing(); }
+bool bL1() { return controller1.ButtonL1.pressing(); }
+bool bUp() { return controller1.ButtonUp.pressing(); }
+bool bDown() { return controller1.ButtonDown.pressing(); }
+bool bR2L2() { return controller1.ButtonR2.pressing() & controller1.ButtonL2.pressing(); }
+
+Button butA = Button(&pressA, &bA, TOGGLE, RISING);
+Button butB = Button(&pressB, &bB, TOGGLE, RISING);
+Button butR1 = Button(&pressR1, &bR1, PULSE, RISING);
+Button butL1 = Button(&pressL1, &bL1, PULSE, RISING);
+Button butUp = Button(&pressUp, &bUp, PULSE, RISING);
+Button butDown = Button(&pressDown, &bDown, PULSE, RISING);
+Button butR2L2 = Button(&pressR2L2, &bR2L2, PULSE, RISING);
+
 // ================================== Task ================================== //
 void user()
 {
@@ -42,49 +92,11 @@ void user()
     int right_y = process_input(controller1.Axis2.position(percent));
     arcade_drive(left_x, left_y, right_x, right_y);
 
-    if (controller1.ButtonA.pressing())
-    {
-        if (!a_previous_press)
-        {
-            clamp_on = !clamp_on;
-        }
-        clamp.set(clamp_on);
-    }
-    a_previous_press = controller1.ButtonA.pressing();
-
-    if (controller1.ButtonB.pressing() && !b_previous_press)
-    {
-        lift_on = !lift_on;
-        intake_lift.set(lift_on);
-    }
-    b_previous_press = controller1.ButtonB.pressing();
-
-    if (controller1.ButtonR1.pressing() && !r1_previous_press)
-    {
-        intake_power = intake_power > 0 ? 0 : 12;
-    }
-    r1_previous_press = controller1.ButtonR1.pressing();
-    if (controller1.ButtonL1.pressing() && !l1_previous_press)
-    {
-        intake_power = intake_power < 0 ? 0 : -12;
-    }
-    l1_previous_press = controller1.ButtonL1.pressing();
-    intake.spin(forward, intake_power, volt);
-
-    if (controller1.ButtonUp.pressing() && !up_previous_press)
-    {
-        climb_power = climb_power > 0 ? 0 : 12;
-    }
-    up_previous_press = controller1.ButtonUp.pressing();
-    if (controller1.ButtonDown.pressing() && !down_previous_press)
-    {
-        climb_power = climb_power < 0 ? 0 : -12;
-    }
-    down_previous_press = controller1.ButtonDown.pressing();
-    intake.spin(forward, intake_power, volt);
-
-    if (controller1.ButtonR2.pressing() && controller1.ButtonL2.pressing())
-    {
-        climb_release.set(true);
-    }
+    butA.find_press();
+    butB.find_press();
+    butR1.find_press();
+    butL1.find_press();
+    butUp.find_press();
+    butDown.find_press();
+    butR2L2.find_press();
 }
