@@ -1,35 +1,57 @@
 #include "main.h"
 
-enum PressType
+Button::Button(void (*function)(bool), bool (*buttonPress)(), enum PressType t, enum Edge e, bool initial)
 {
-    PULSE,
-    TOGGLE,
-    HOLD
-};
+    isPressed = buttonPress;
+    callback = function;
+    type = t;
+    edge = e;
+    state = initial;
+}
 
-enum Edge
+void Button::find_press()
 {
-    RISING,
-    FALLING,
-    PRESSED
-};
-
-class Button
-{
-private:
-    // bool previous_press;
-    enum PressType type;
-    enum Edge edge;
-    controller::button button;
-
-public:
-    Button(controller::button b, void (*f)(bool), enum PressType t = TOGGLE, enum Edge e = RISING)
+    switch (edge)
     {
-        button = b;
-        type = t;
-        edge = e;
+    case RISING:
+        if (isPressed() && !previous_press)
+        {
+            action();
+        }
+        break;
+
+    case FALLING:
+        if (!isPressed() && previous_press)
+        {
+            action();
+        }
+        break;
+
+    case CONTINUOUS:
+        if (isPressed() && !previous_press)
+        {
+            action();
+        }
+        if (!isPressed() && previous_press)
+        {
+            action();
+        }
+        break;
     }
-    void find_press()
+    std::cout << "a: " << isPressed() << std::endl;
+    previous_press = isPressed();
+}
+
+void Button::action()
+{
+    switch (type)
     {
+    case PULSE:
+        callback(state);
+        break;
+    case TOGGLE:
+        state = !state;
+        callback(state);
+        break;
     }
-};
+}

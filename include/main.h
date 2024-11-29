@@ -2,6 +2,7 @@
 #include <utility>
 #include <iostream>
 
+#include "button.hpp"
 #include "devices.hpp"
 #include "user.hpp"
 #include "auton.hpp"
