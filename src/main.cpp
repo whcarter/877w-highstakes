@@ -17,6 +17,13 @@ competition Competition;
 
 void pre_auton(void)
 {
+  imu.calibrate();
+  while (imu.isCalibrating())
+  {
+    wait(10, msec);
+  }
+  // thread turn_control = thread(startTask);
+  // wait(1000, msec);
 }
 
 void autonomous(void)
@@ -26,9 +33,12 @@ void autonomous(void)
 
 void usercontrol(void)
 {
-  while (1)
+  // turn(8);
+  turnRelative(180);
+  while (0)
   {
     user();
+    // std::cout << "Heading: " << imu.heading() << std::endl;
     wait(20, msec);
   }
 }

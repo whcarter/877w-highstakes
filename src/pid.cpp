@@ -1,6 +1,9 @@
 #include "main.h"
 
-PIDController::PIDController(double p_gain, double i_gain, double d_gain, double loop_time, void (*action_callback)(double), double (*position_callback)())
+PIDController::PIDController(double p_gain, double i_gain, double d_gain, double loop_time,
+                             void (*action_callback)(double), double (*position_callback)(),
+                             double error_bound, double max_time,
+                             double integral_start)
 {
     kP = p_gain;
     kI = i_gain;
@@ -8,13 +11,19 @@ PIDController::PIDController(double p_gain, double i_gain, double d_gain, double
     dT = loop_time;
     func = action_callback;
     current = position_callback;
+    bound = error_bound;
+    timeout = max_time;
+    i_start = integral_start;
 }
 
-double PIDController::calculate(double current)
+double PIDController::calculate(double position)
 {
-    error = target - current;
+    error = target - position;
+    /*if (error < -180)
+        error += 360;*/
     proportional = error;
-    integral = integral + error * dT;
+    if (millis() - start_time > i_start)
+        integral = integral + error * dT;
     derivative = (error - previous_error) / dT;
     return (proportional * kP) + (integral * kI) + (derivative * kD);
 }
@@ -22,6 +31,7 @@ double PIDController::calculate(double current)
 void PIDController::set_target(double new_target)
 {
     target = new_target;
+    start_time = millis();
 }
 
 double PIDController::get_error()
@@ -32,10 +42,12 @@ double PIDController::get_error()
 void PIDController::start()
 {
     isRunning = true;
+    start_time = millis();
 }
 
 void PIDController::stop()
 {
+    func(0);
     isRunning = false;
 }
 
@@ -45,8 +57,28 @@ void PIDController::stop()
     {
         while (isRunning)
         {
-            double power = calculate(current());
+            double position = current();
+            double power = calculate(position);
+            //std::cout << "Position: " << position;
+            //std::cout << "\tIntegral: " << integral << std::endl;
             func(power);
+            past_error.push_front(error);
+            if (past_error.size() > 5)
+            {
+                past_error.pop_back();
+            }
+            cum_error = 0;
+            for (double e : past_error)
+            {
+                cum_error += fabs(e);
+            }
+            if (cum_error < bound)
+            {
+                stop();
+                std::cout << "Settle time: " << millis() - start_time << std::endl;
+            }
+            if (timeout > 0 && (millis() - start_time) > timeout)
+                stop();
             wait(dT, msec);
         }
         wait(100, msec);
