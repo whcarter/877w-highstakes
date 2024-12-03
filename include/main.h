@@ -4,13 +4,13 @@
 #include <list>
 #include <chrono>
 
-#include "button.hpp"
+#include "support/button.hpp"
 #include "devices.hpp"
 #include "user.hpp"
 #include "auton.hpp"
-#include "pid.hpp"
-#include "odom.hpp"
+#include "support/pid.hpp"
+#include "support/odom.hpp"
 #include "chassis.hpp"
-#include "utility.hpp"
+#include "support/utility.hpp"
 
 using namespace vex;

@@ -59,8 +59,8 @@ void PIDController::stop()
         {
             double position = current();
             double power = calculate(position);
-            //std::cout << "Position: " << position;
-            //std::cout << "\tIntegral: " << integral << std::endl;
+            std::cout << "Position: " << position << std::endl;
+            // std::cout << "\tIntegral: " << integral << std::endl;
             func(power);
             past_error.push_front(error);
             if (past_error.size() > 5)

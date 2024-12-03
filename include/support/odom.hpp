@@ -1,6 +1,9 @@
 #pragma once
 #include "main.h"
 
+double getHeading();
+double getDistance();
+
 namespace odom
 {
 
