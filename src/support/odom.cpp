@@ -1,5 +1,22 @@
 #include "main.h"
 
+double getHeading()
+{
+    double heading = imu.heading();
+    while (heading > 180)
+        heading -= 360;
+    while (heading < -180)
+        heading += 360;
+    return heading;
+}
+
+double getDistance()
+{
+    double avg = (drive_left.position(rev) + drive_right.position(rev)) / 2.0;
+    double distance = avg * WHEEL_DIAMETER * M_PI / DRIVE_RATIO;
+    return distance;
+}
+
 /*
 const std::pair<double, double> left_offset = {-2.882, 0.718}; // Old: {-4.829, 1.4675}
 const std::pair<double, double> rear_offset = {1.741, 1.539};  // Old: {1.1655, 0.825}
