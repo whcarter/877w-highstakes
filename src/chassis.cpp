@@ -13,6 +13,13 @@ void move(double power)
     drive_right.spin(forward, power, volt);
 }
 
+void moveLeft(double power) {
+    drive_left.spin(forward, power, volt);
+}
+void moveRight(double power) {
+    drive_right.spin(forward, power, volt);
+}
+
 // =========================== Calculated Control =========================== //
 void c_drive(int distance, int power = 12)
 {
@@ -38,7 +45,10 @@ void c_drive(int distance, int power = 12)
 
 // =============================== PID Control ============================== //
 PIDController turn_pid(0.07, 0.00009, 0.000000005, 20.0, &turn, &getHeading, 2, -1, 500);
-PIDController drive_pid(0.07, 0.00009, 0.000000015, 20.0, &move, &getDistance, 1, -1, 500);
+//PIDController drive_pid(0.07, 0.00009, 0.000000015, 20.0, &move, &getDistance, 1, -1, 500);
+PIDController left_pid(0.01, 0, 0, 10, &moveLeft, &getLeftVelocity, 2, -1, -1);
+PIDController right_pid(0.01, 0, 0, 10, &moveRight, &getRightVelocity, 2, -1, -1);
+PIDController drive_pid(0.07, 0.00009, 0.000000015, 20.0, &setDriveVelocity, &getDistance, 1, -1, 500);
 
 // PID turn "heading" degrees clockwise
 void turnRelative(double heading)
@@ -53,6 +63,14 @@ void turnRelative(double heading)
     turn_pid.start();
 }
 
+// Sets each PID for each drive half to given velocity, in rpm
+void setDriveVelocity(double velocity) {
+    left_pid.set_target(velocity);
+    right_pid.set_target(velocity);
+    left_pid.start();
+    right_pid.start();
+}
+
 // PID drive "distance" inches straight
 void driveRelative(double distance)
 {
@@ -63,6 +81,14 @@ void driveRelative(double distance)
 void startTurnTask()
 {
     turn_pid.run();
+}
+
+void startLeftTask() {
+    left_pid.run();
+}
+
+void startRightTask() {
+    right_pid.run();
 }
 
 void startDriveTask()

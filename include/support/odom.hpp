@@ -3,6 +3,8 @@
 
 double getHeading();
 double getDistance();
+double getLeftVelocity();
+double getRightVelocity();
 
 namespace odom
 {

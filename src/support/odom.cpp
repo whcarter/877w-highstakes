@@ -17,6 +17,14 @@ double getDistance()
     return distance;
 }
 
+double getLeftVelocity() {
+    return drive_left.velocity(rpm) / DRIVE_RATIO;
+}
+
+double getRightVelocity() {
+    return drive_right.velocity(rpm) / DRIVE_RATIO;
+}
+
 /*
 const std::pair<double, double> left_offset = {-2.882, 0.718}; // Old: {-4.829, 1.4675}
 const std::pair<double, double> rear_offset = {1.741, 1.539};  // Old: {1.1655, 0.825}

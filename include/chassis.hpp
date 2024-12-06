@@ -10,6 +10,8 @@ const double DRIVE_RATIO = 36.0 / 84.0;
 // Primative Control
 void turn(double power);
 void move(double power);
+void moveLeft(double power);
+void moveRight(double power);
 
 // Calculated Control
 void c_drive(int distance, int power);
@@ -17,7 +19,10 @@ void c_drive(int distance, int power);
 // PID Control
 // PIDController turn_pid(1.0, 0.0, 0.0, 10.0, &turn, &getHeading);
 void turnRelative(double heading);
+void setDriveVelocity(double velocity);
 void driveRelative(double distance);
 
 void startTurnTask();
+void startLeftTask();
+void startRightTask();
 void startDriveTask();
