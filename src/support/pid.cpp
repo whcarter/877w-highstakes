@@ -3,7 +3,8 @@
 PIDController::PIDController(double p_gain, double i_gain, double d_gain, double loop_time,
                              void (*action_callback)(double), double (*position_callback)(),
                              double error_bound, double max_time,
-                             double integral_start)
+                             double integral_start,
+                             bool cumulative)
 {
     kP = p_gain;
     kI = i_gain;
@@ -14,6 +15,7 @@ PIDController::PIDController(double p_gain, double i_gain, double d_gain, double
     bound = error_bound;
     timeout = max_time;
     i_start = integral_start;
+    cum_power = cumulative;
 }
 
 double PIDController::calculate(double position)
@@ -59,6 +61,11 @@ void PIDController::stop()
         {
             double position = current();
             double power = calculate(position);
+            if (cum_error)
+            {
+                power += previous_power;
+                previous_power = power;
+            }
             std::cout << "Position: " << position << std::endl;
             // std::cout << "\tIntegral: " << integral << std::endl;
             func(power);
@@ -74,7 +81,10 @@ void PIDController::stop()
             }
             if (cum_error < bound)
             {
-                stop();
+                if(!cum_power) {
+                    stop();
+                }
+                isRunning = false;
                 std::cout << "Settle time: " << millis() - start_time << std::endl;
             }
             if (timeout > 0 && (millis() - start_time) > timeout)

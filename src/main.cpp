@@ -33,15 +33,14 @@ void pre_auton(void)
 
 void autonomous(void)
 {
-  //skills();
+  auton();
 }
 
 void usercontrol(void)
 {
-  driveRelative(12);
   while (1)
   {
-    // user();
+    user();
     wait(20, msec);
   }
 }
