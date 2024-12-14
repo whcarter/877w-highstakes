@@ -34,6 +34,8 @@ void pre_auton(void)
 void autonomous(void)
 {
   auton();
+  //masuk_auton_left();
+  //masuk_skills();
 }
 
 void usercontrol(void)

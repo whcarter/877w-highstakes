@@ -29,6 +29,7 @@ public:
                   bool cumulative = false);
     void set_target(double new_target);
     double get_error();
+    bool running();
     void start();
     void stop();
     [[noreturn]] void run();

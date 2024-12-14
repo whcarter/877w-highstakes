@@ -41,6 +41,10 @@ double PIDController::get_error()
     return error;
 }
 
+bool PIDController::running() {
+    return isRunning;
+}
+
 void PIDController::start()
 {
     isRunning = true;
