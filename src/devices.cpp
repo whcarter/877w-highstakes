@@ -8,10 +8,12 @@ controller controller1 = controller(primary);
 // Motors
 motor driveLf = motor(PORT19, ratio18_1, true);
 motor driveLb = motor(PORT20, ratio18_1, true);
+motor driveLt = motor(PORT16, ratio18_1, false);
 motor driveRf = motor(PORT17, ratio18_1, false);
 motor driveRb = motor(PORT18, ratio18_1, false);
-motor_group drive_left = motor_group(driveLf, driveLb);
-motor_group drive_right = motor_group(driveRf, driveRb);
+motor driveRt = motor(PORT15, ratio18_1, true);
+motor_group drive_left = motor_group(driveLf, driveLb, driveLt);
+motor_group drive_right = motor_group(driveRf, driveRb, driveRt);
 motor intake_bottom = motor(PORT11, ratio18_1, false);
 motor intake_top = motor(PORT12, ratio18_1, false);
 motor_group intake = motor_group(intake_bottom, intake_top);

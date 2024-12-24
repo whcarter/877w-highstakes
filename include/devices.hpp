@@ -8,8 +8,10 @@ extern controller controller1;
 
 extern motor driveLf;
 extern motor driveLb;
+extern motor driveLt;
 extern motor driveRf;
 extern motor driveRb;
+extern motor driveRt;
 extern vex::motor_group drive_left;
 extern vex::motor_group drive_right;
 extern motor intake_top;
