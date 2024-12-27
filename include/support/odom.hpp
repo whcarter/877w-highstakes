@@ -6,6 +6,8 @@ double getDistance();
 double getLeftVelocity();
 double getRightVelocity();
 
+[[noreturn]] void track_position();
+
 namespace odom
 {
 

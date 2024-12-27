@@ -71,11 +71,12 @@ void c_turn(int angle, int power)
 }
 
 // =============================== PID Control ============================== //
-PIDController turn_pid(0.07, 0.00009, 0.000000005, 20.0, &turn, &getHeading, 2, -1, 500);
-// PIDController drive_pid(0.07, 0.00009, 0.000000015, 20.0, &move, &getDistance, 1, -1, 500);
-PIDController left_pid(0.01, 0, 0, 10, &moveLeft, &getLeftVelocity, 2, -1, -1, true);
-PIDController right_pid(0.01, 0, 0, 10, &moveRight, &getRightVelocity, 2, -1, -1, true);
-PIDController drive_pid(0.03, 0*0.00009, 0*0.000000015, 20.0, &setDriveVelocity, &getDistance, 1, 5000, 500);
+PIDController turn_pid(0.4, 0.0008, 0.1, 20.0, &turn, &getHeading, 2, -1, 500, 5000);
+// PIDController turn_pid(0.001, 0, 0.00000000, 20.0, &turn, &getHeading, 2, -1, 500, false);
+//  PIDController drive_pid(0.07, 0.00009, 0.000000015, 20.0, &move, &getDistance, 1, -1, 500);
+PIDController left_pid(0.01, 0, 0, 10, &moveLeft, &getLeftVelocity, 2, -1, -1, -1, true);
+PIDController right_pid(0.01, 0, 0, 10, &moveRight, &getRightVelocity, 2, -1, -1, -1, true);
+PIDController drive_pid(0.03, 0 * 0.00009, 0 * 0.000000015, 20.0, &setDriveVelocity, &getDistance, 1, 5000, 500);
 
 // PID turn "heading" degrees clockwise
 void turnRelative(double heading, bool blocking)
@@ -83,14 +84,15 @@ void turnRelative(double heading, bool blocking)
     /*while (heading > 180)
         heading -= 360;
     while (heading < -180)
-        heading += 360;*/
+        heading += 360;
     imu.setHeading(0, degrees);
-    wait(2000, msec);
-    turn_pid.set_target(heading);
+    wait(2000, msec);*/
+    turn_pid.set_target(getHeading() + heading);
     turn_pid.start();
-    /*while (blocking && turn_pid.running()) {
+    while (blocking && turn_pid.running())
+    {
         wait(100, msec);
-    }*/
+    }
 }
 
 // Sets each PID for each drive half to given velocity, in rpm
@@ -109,7 +111,8 @@ void driveRelative(double distance, bool blocking)
     drive_right.setPosition(0, rev);
     drive_pid.set_target(distance);
     drive_pid.start();
-    while (blocking && turn_pid.running()) {
+    while (blocking && turn_pid.running())
+    {
         wait(100, msec);
     }
 }

@@ -1,12 +1,9 @@
 #include "main.h"
 
+double heading = 0;
+
 double getHeading()
 {
-    double heading = imu.heading();
-    while (heading > 180)
-        heading -= 360;
-    while (heading < -180)
-        heading += 360;
     return heading;
 }
 
@@ -17,12 +14,29 @@ double getDistance()
     return distance;
 }
 
-double getLeftVelocity() {
+double getLeftVelocity()
+{
     return drive_left.velocity(rpm) / DRIVE_RATIO;
 }
 
-double getRightVelocity() {
+double getRightVelocity()
+{
     return drive_right.velocity(rpm) / DRIVE_RATIO;
+}
+
+[[noreturn]] void track_position()
+{
+    while (true)
+    {
+        double heading_change = imu.heading() - fmod(heading, 360);
+        while (heading_change > 180)
+            heading_change -= 360;
+        while (heading_change < -180)
+            heading_change += 360;
+        heading += heading_change;
+
+        wait(20, msec);
+    }
 }
 
 /*

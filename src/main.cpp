@@ -25,10 +25,11 @@ void pre_auton(void)
     wait(10, msec);
   }
 
+  thread tracking = thread(track_position);
   thread turn_control = thread(startTurnTask);
-  thread left_control = thread(startLeftTask);
-  thread right_control = thread(startRightTask);
-  thread drive_control = thread(startDriveTask);
+  //thread left_control = thread(startLeftTask);
+  //thread right_control = thread(startRightTask);
+  //thread drive_control = thread(startDriveTask);
 }
 
 void autonomous(void)
@@ -40,9 +41,10 @@ void autonomous(void)
 
 void usercontrol(void)
 {
+  test_routine();
   while (1)
   {
-    user();
+    //user();
     wait(20, msec);
   }
 }

@@ -3,7 +3,7 @@
 PIDController::PIDController(double p_gain, double i_gain, double d_gain, double loop_time,
                              void (*action_callback)(double), double (*position_callback)(),
                              double error_bound, double max_time,
-                             double integral_start,
+                             double integral_start, double integral_cap,
                              bool cumulative)
 {
     kP = p_gain;
@@ -15,6 +15,7 @@ PIDController::PIDController(double p_gain, double i_gain, double d_gain, double
     bound = error_bound;
     timeout = max_time;
     i_start = integral_start;
+    i_cap = integral_cap;
     cum_power = cumulative;
 }
 
@@ -26,6 +27,9 @@ double PIDController::calculate(double position)
     proportional = error;
     if (millis() - start_time > i_start)
         integral = integral + error * dT;
+    if (fabs(integral) > i_cap && i_cap > 0)
+        integral = (integral > 0) ? i_cap : -i_cap;
+
     derivative = (error - previous_error) / dT;
     return (proportional * kP) + (integral * kI) + (derivative * kD);
 }
@@ -41,7 +45,8 @@ double PIDController::get_error()
     return error;
 }
 
-bool PIDController::running() {
+bool PIDController::running()
+{
     return isRunning;
 }
 
@@ -65,13 +70,15 @@ void PIDController::stop()
         {
             double position = current();
             double power = calculate(position);
-            if (cum_error)
+            if (cum_power)
             {
                 power += previous_power;
                 previous_power = power;
             }
-            std::cout << "Position: " << position << std::endl;
-            // std::cout << "\tIntegral: " << integral << std::endl;
+            // std::cout << "Position: " << position;// << std::endl;
+            // std::cout << "\tError: " << error;// << std::endl;
+            // std::cout << "\tPower: " << power << std::endl;;
+            //  std::cout << "\tIntegral: " << integral << std::endl;
             func(power);
             past_error.push_front(error);
             if (past_error.size() > 5)
@@ -85,7 +92,8 @@ void PIDController::stop()
             }
             if (cum_error < bound)
             {
-                if(!cum_power) {
+                if (!cum_power)
+                {
                     stop();
                 }
                 isRunning = false;

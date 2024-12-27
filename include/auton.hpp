@@ -6,3 +6,4 @@ void auton();
 void masuk_auton_left();
 void masuk_skills();
 void skills();
+void test_routine();
