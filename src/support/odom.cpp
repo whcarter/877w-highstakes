@@ -14,6 +14,18 @@ double getDistance()
     return distance;
 }
 
+double getLeftDistance()
+{
+    double distance = drive_left.position(rev) * WHEEL_DIAMETER * M_PI / DRIVE_RATIO;
+    return distance;
+}
+
+double getRightDistance()
+{
+    double distance = drive_right.position(rev) * WHEEL_DIAMETER * M_PI / DRIVE_RATIO;
+    return distance;
+}
+
 double getLeftVelocity()
 {
     return drive_left.velocity(rpm) / DRIVE_RATIO;

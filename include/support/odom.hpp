@@ -3,6 +3,8 @@
 
 double getHeading();
 double getDistance();
+double getLeftDistance();
+double getRightDistance();
 double getLeftVelocity();
 double getRightVelocity();
 

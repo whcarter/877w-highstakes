@@ -22,8 +22,6 @@ PIDController::PIDController(double p_gain, double i_gain, double d_gain, double
 double PIDController::calculate(double position)
 {
     error = target - position;
-    /*if (error < -180)
-        error += 360;*/
     proportional = error;
     if (millis() - start_time > i_start)
         integral = integral + error * dT;
@@ -62,6 +60,16 @@ void PIDController::stop()
     isRunning = false;
 }
 
+void PIDController::set_error_bound(double error_bound)
+{
+    bound = error_bound;
+}
+
+void PIDController::set_timeout(double max_time)
+{
+    timeout = max_time;
+}
+
 [[noreturn]] void PIDController::run()
 {
     while (true)
@@ -76,9 +84,9 @@ void PIDController::stop()
                 previous_power = power;
             }
             // std::cout << "Position: " << position;// << std::endl;
-            // std::cout << "\tError: " << error;// << std::endl;
+            // std::cout << "\tError: " << error << std::endl;
             // std::cout << "\tPower: " << power << std::endl;;
-            //  std::cout << "\tIntegral: " << integral << std::endl;
+            // std::cout << "\tIntegral: " << integral << std::endl;
             func(power);
             past_error.push_front(error);
             if (past_error.size() > 5)

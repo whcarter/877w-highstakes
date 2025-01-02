@@ -61,6 +61,7 @@ void test_routine()
 {
     // Right 90, 90, 180, Left 90, 270, 360
     std::cout << "------------------------------" << std::endl;
+    /*
     turnRelative(90);
     wait(3000, msec);
     turnRelative(90);
@@ -72,5 +73,15 @@ void test_routine()
     turnRelative(-270);
     wait(3000, msec);
     turnRelative(-360);
+    */
+    // Forward 24, Back 12, 12, Forward 48
+    driveRelative(24);
+    wait(3000, msec);
+    driveRelative(-12);
+    wait(3000, msec);
+    driveRelative(-12);
+    wait(3000, msec);
+    driveRelative(48);
+    
     std::cout << "------------------------------" << std::endl;
 }

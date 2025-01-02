@@ -33,5 +33,7 @@ public:
     bool running();
     void start();
     void stop();
+    void set_error_bound(double error_bound);
+    void set_timeout(double max_time);
     [[noreturn]] void run();
 };

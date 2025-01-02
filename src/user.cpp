@@ -1,20 +1,13 @@
 #include "main.h"
 
-bool a_previous_press = false;
-bool x_previous_press = false;
-bool b_previous_press = false;
-bool y_previous_press = false;
-bool r1_previous_press = false;
-bool l1_previous_press = false;
-bool up_previous_press = false;
-bool down_previous_press = false;
-bool clamp_on = false;
-bool lift_on = false;
 int intake_power = 0;
 int climb_power = 0;
+int intake_start;
+bool intake_jammed = false;
 
 const int deadzone = 0;
 const float input_exp = 2;
+const int intake_cooldown = 500;
 
 // ========================= User Control Functions ========================= //
 void arcade_drive(int left_x, int left_y, int right_x, int right_y)
@@ -42,27 +35,27 @@ void pressB(bool state)
 {
     intake_lift.set(state);
 }
-void pressR1(bool state)
+void pressR1(bool state = false)
 {
     intake_power = intake_power > 0 ? 0 : 12;
     intake.spin(forward, intake_power, volt);
 }
-void pressL1(bool state)
+void pressL1(bool state = false)
 {
     intake_power = intake_power < 0 ? 0 : -12;
     intake.spin(forward, intake_power, volt);
 }
-void pressUp(bool state)
+void pressUp(bool state = false)
 {
     climb_power = climb_power > 0 ? 0 : 12;
     climb.spin(forward, climb_power, volt);
 }
-void pressDown(bool state)
+void pressDown(bool state = false)
 {
     climb_power = climb_power > 0 ? 0 : -12;
     climb.spin(forward, climb_power, volt);
 }
-void pressR2L2(bool state)
+void pressR2L2(bool state = false)
 {
     climb_release.set(true);
 }
@@ -99,4 +92,16 @@ void user()
     butUp.find_press();
     butDown.find_press();
     butR2L2.find_press();
+
+    if (intake.torque() > 1.1)
+    {
+        intake_jammed = true;
+        pressL1();
+        intake_start = millis();
+    }
+    if (intake_jammed && millis() - intake_start > intake_cooldown)
+    {
+        intake_jammed = false;
+        pressR1();
+    }
 }

@@ -27,24 +27,25 @@ void pre_auton(void)
 
   thread tracking = thread(track_position);
   thread turn_control = thread(startTurnTask);
-  //thread left_control = thread(startLeftTask);
-  //thread right_control = thread(startRightTask);
-  //thread drive_control = thread(startDriveTask);
+  thread left_control = thread(startLeftTask);
+  thread right_control = thread(startRightTask);
+  // thread drive_control = thread(startDriveTask);
 }
 
 void autonomous(void)
 {
   auton();
-  //masuk_auton_left();
-  //masuk_skills();
 }
 
 void usercontrol(void)
 {
-  test_routine();
+  // test_routine();
+
   while (1)
   {
-    //user();
+    user();
+    // std::cout << "Right: " << drive_right.position(rev) << std::endl;
+    // std::cout << "Left: " << drive_left.position(rev) << std::endl;
     wait(20, msec);
   }
 }

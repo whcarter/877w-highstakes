@@ -12,6 +12,9 @@ void turn(double power);
 void move(double power);
 void moveLeft(double power);
 void moveRight(double power);
+void setLeftPower(double power);
+void setRightPower(double power);
+void setTurnPower(double power);
 
 // Calculated Control
 void c_drive(int distance, int power);
