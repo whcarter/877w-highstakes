@@ -14,6 +14,23 @@ void auton()
     intake.stop();
 }
 
+void right_auton()
+{
+    clamp.set(false);
+    c_drive(-30, 4);
+    wait(1000, msec);
+    clamp.set(true);
+    wait(1000, msec);
+    c_drive(6, 8);
+    wait(1000, msec);
+    intake.spin(forward, 12, volt);
+    turnRelative(-30);
+    driveRelative(24);
+    driveRelative(-48);
+    wait(1000, msec);
+    intake.stop();
+}
+
 void masuk_auton_left()
 {
     clamp.set(true);
@@ -74,6 +91,7 @@ void test_routine()
     wait(3000, msec);
     turnRelative(-360);
     */
+    
     // Forward 24, Back 12, 12, Forward 48
     driveRelative(24);
     wait(3000, msec);

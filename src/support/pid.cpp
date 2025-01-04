@@ -108,7 +108,9 @@ void PIDController::set_timeout(double max_time)
                 std::cout << "Settle time: " << millis() - start_time << std::endl;
             }
             if (timeout > 0 && (millis() - start_time) > timeout)
+            {
                 stop();
+            }
             wait(dT, msec);
         }
         wait(100, msec);

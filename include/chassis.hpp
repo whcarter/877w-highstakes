@@ -22,7 +22,7 @@ void c_turn(int angle, int power);
 
 // PID Control
 // PIDController turn_pid(1.0, 0.0, 0.0, 10.0, &turn, &getHeading);
-void turnRelative(double heading, bool blocking = true);
+void turnRelative(double heading, bool blocking = true, double error_bound = 2.0, double timeout = 5000);
 void setDriveVelocity(double velocity);
 void driveRelative(double distance, bool blocking = true);
 
