@@ -79,12 +79,14 @@ Button butR2L2 = Button(&pressR2L2, &bR2L2, PULSE, RISING);
 // ================================== Task ================================== //
 void user()
 {
+    // Pass joystick values into drive function
     int left_x = process_input(controller1.Axis4.position(percent));
     int left_y = process_input(controller1.Axis3.position(percent));
     int right_x = process_input(controller1.Axis1.position(percent));
     int right_y = process_input(controller1.Axis2.position(percent));
     arcade_drive(left_x, left_y, right_x, right_y);
 
+    // Detect button presses
     butA.find_press();
     butB.find_press();
     butR1.find_press();
@@ -93,6 +95,7 @@ void user()
     butDown.find_press();
     butR2L2.find_press();
 
+    // Reverse intake if past stall torque
     if (intake.torque() > 1.1)
     {
         intake_jammed = true;

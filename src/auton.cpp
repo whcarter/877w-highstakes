@@ -31,24 +31,12 @@ void right_auton()
     intake.stop();
 }
 
-void masuk_auton_left()
-{
-    clamp.set(true);
-    driveRelative(-36);
-    /*clamp.set(false);
-    turnRelative(60);
-    intake.spin(forward, 12, volt);
-    driveRelative(30);
-    wait(5000, msec);
-    intake.stop();*/
-}
-
 void skills()
 {
     clamp.set(true);
     c_drive(-6, 4);
     wait(1000, msec);
-    turn(-90, 4);
+    c_turn(-90, 4);
     wait(1000, msec);
     intake.spin(forward, 12, volt);
     c_drive(50, 4);
@@ -91,7 +79,7 @@ void test_routine()
     wait(3000, msec);
     turnRelative(-360);
     */
-    
+
     // Forward 24, Back 12, 12, Forward 48
     driveRelative(24);
     wait(3000, msec);
@@ -100,6 +88,6 @@ void test_routine()
     driveRelative(-12);
     wait(3000, msec);
     driveRelative(48);
-    
+
     std::cout << "------------------------------" << std::endl;
 }

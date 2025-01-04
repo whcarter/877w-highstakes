@@ -27,8 +27,6 @@ void pre_auton(void)
 
   thread tracking = thread(track_position);
   thread turn_control = thread(startTurnTask);
-  // thread left_control = thread(startLeftTask);
-  // thread right_control = thread(startRightTask);
   thread drive_control = thread(startDriveTask);
 }
 

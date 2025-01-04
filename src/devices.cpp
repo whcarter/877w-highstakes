@@ -29,3 +29,4 @@ digital_out climb_release = digital_out(Brain.ThreeWirePort.C);
 // Sensors
 inertial imu = inertial(PORT1);
 gps gps_sensor = gps(PORT2);
+optical intake_optical = optical(PORT3);

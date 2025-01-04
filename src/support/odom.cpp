@@ -2,11 +2,13 @@
 
 double heading = 0;
 
+// Returns the robot's current heading, uncapped, in degrees
 double getHeading()
 {
     return heading;
 }
 
+// Returns the distance traveled by both drivetrain sides since match start, in inches
 double getDistance()
 {
     double avg = (drive_left.position(rev) + drive_right.position(rev)) / 2.0;
@@ -14,28 +16,21 @@ double getDistance()
     return distance;
 }
 
+// Returns the distance traveled by the left side since match start, in inches
 double getLeftDistance()
 {
     double distance = drive_left.position(rev) * WHEEL_DIAMETER * M_PI / DRIVE_RATIO;
     return distance;
 }
 
+// Returns the distance traveled by the right side since match start, in inches
 double getRightDistance()
 {
     double distance = drive_right.position(rev) * WHEEL_DIAMETER * M_PI / DRIVE_RATIO;
     return distance;
 }
 
-double getLeftVelocity()
-{
-    return drive_left.velocity(rpm) / DRIVE_RATIO;
-}
-
-double getRightVelocity()
-{
-    return drive_right.velocity(rpm) / DRIVE_RATIO;
-}
-
+// Calculates a cumulative heading throughout the match, uncapped, in degrees
 [[noreturn]] void track_position()
 {
     while (true)

@@ -107,11 +107,11 @@ void c_turn(int angle, int power)
 
 // =============================== PID Control ============================== //
 PIDController turn_pid(0.2, 0.0003, 0.01, 20.0, &setTurnPower, &getHeading, 2, -1, 500, 20000);
-//PIDController turn_pid(0.2, 0.0008, 0.1, 20.0, &setTurnPower, &getHeading, 2, -1, 500, 5000);
-// PIDController turn_pid(0.001, 0, 0.00000000, 20.0, &turn, &getHeading, 2, -1, 500, false);
+// PIDController turn_pid(0.2, 0.0008, 0.1, 20.0, &setTurnPower, &getHeading, 2, -1, 500, 5000);
+//  PIDController turn_pid(0.001, 0, 0.00000000, 20.0, &turn, &getHeading, 2, -1, 500, false);
 PIDController drive_pid(0.6, 0.00001, 0.000000015, 20.0, &setDrivePower, &getDistance, 1, -1, 500);
-//PIDController left_pid(0.07, 0.00009, 0.000000015, 20.0, &setLeftPower, &getLeftDistance, 1, -1, 500);
-//PIDController right_pid(0.07, 0.00009, 0.000000015, 20.0, &setRightPower, &getRightDistance, 1, -1, 500);
+// PIDController left_pid(0.07, 0.00009, 0.000000015, 20.0, &setLeftPower, &getLeftDistance, 1, -1, 500);
+// PIDController right_pid(0.07, 0.00009, 0.000000015, 20.0, &setRightPower, &getRightDistance, 1, -1, 500);
 
 // PID turn "heading" degrees clockwise
 void turnRelative(double heading, bool blocking, double error_bound, double timeout)
@@ -126,15 +126,6 @@ void turnRelative(double heading, bool blocking, double error_bound, double time
     }
 }
 
-// Sets each PID for each drive half to given velocity, in rpm
-/*void setDriveVelocity(double velocity)
-{
-    left_pid.set_target(velocity);
-    right_pid.set_target(velocity);
-    left_pid.start();
-    right_pid.start();
-}*/
-
 // PID drive "distance" inches straight
 void driveRelative(double distance, bool blocking)
 {
@@ -144,13 +135,9 @@ void driveRelative(double distance, bool blocking)
     turn_pid.start();
     drive_left.setPosition(0, rev);
     drive_right.setPosition(0, rev);
-    //left_pid.set_target(distance);
-    //right_pid.set_target(distance);
     drive_pid.set_target(distance);
     drive_pid.start();
-    //left_pid.start();
-    //right_pid.start();
-    while (blocking && drive_pid.running())//(left_pid.running() || right_pid.running()))
+    while (blocking && drive_pid.running())
     {
         wait(100, msec);
     }
@@ -165,14 +152,3 @@ void startDriveTask()
 {
     drive_pid.run();
 }
-
-/*void startLeftTask()
-{
-    left_pid.run();
-}
-
-void startRightTask()
-{
-    right_pid.run();
-}
-*/

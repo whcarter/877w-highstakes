@@ -27,3 +27,4 @@ extern digital_out climb_release;
 
 extern inertial imu;
 extern gps gps_sensor;
+extern optical intake_optical;

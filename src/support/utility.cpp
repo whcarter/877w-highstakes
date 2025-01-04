@@ -1,5 +1,6 @@
 #include "main.h"
 
+// Returns time elapsed since program start, in milliseconds
 double millis()
 {
     using namespace std::chrono;
