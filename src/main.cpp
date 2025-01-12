@@ -33,6 +33,8 @@ void pre_auton(void)
 void autonomous(void)
 {
   auton();
+  // just_move();
+  //masuk_skills();
 }
 
 void usercontrol(void)

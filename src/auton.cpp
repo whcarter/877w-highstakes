@@ -14,6 +14,12 @@ void auton()
     intake.stop();
 }
 
+void just_move()
+{
+    clamp.set(false);
+    c_drive(-6, 4);
+}
+
 void right_auton()
 {
     clamp.set(false);
@@ -50,13 +56,13 @@ void masuk_skills()
     c_drive(-8, 4);
     intake.spin(forward, 12, volt);
     wait(1000, msec);
-    c_turn(-120, 4);
+    c_turn(-140, 5);
     wait(1000, msec);
-    c_drive(36, 3);
+    c_drive(36, 4);
     wait(5000, msec);
     intake.stop();
     wait(1000, msec);
-    c_turn(-135, 4);
+    c_turn(-135, 7);
     // c_drive(-24, 4);
     clamp.set(false);
     c_drive(12, 4);
