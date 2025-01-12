@@ -52,7 +52,7 @@ void pressUp(bool state = false)
 }
 void pressDown(bool state = false)
 {
-    climb_power = climb_power > 0 ? 0 : -12;
+    climb_power = climb_power < 0 ? 0 : -12;
     climb.spin(forward, climb_power, volt);
 }
 void pressR2L2(bool state = false)
