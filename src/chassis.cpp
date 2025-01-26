@@ -18,43 +18,43 @@ void move(double power)
     drive_right.spin(forward, power, volt);
 }
 
-void moveLeft(double power)
+void move_left(double power)
 {
     drive_left.spin(forward, power, volt);
 }
-void moveRight(double power)
+void move_right(double power)
 {
     drive_right.spin(forward, power, volt);
 }
 
-void moveCombined()
+void move_combined()
 {
-    moveLeft(drive_power + turn_power);
-    moveRight(drive_power - turn_power);
+    move_left(drive_power + turn_power);
+    move_right(drive_power - turn_power);
 }
 
-void setLeftPower(double power)
+void set_left_power(double power)
 {
     left_power = power;
-    moveCombined();
+    move_combined();
 }
 
-void setRightPower(double power)
+void set_right_power(double power)
 {
     right_power = power;
-    moveCombined();
+    move_combined();
 }
 
-void setTurnPower(double power)
+void set_turn_power(double power)
 {
     turn_power = power;
-    moveCombined();
+    move_combined();
 }
 
-void setDrivePower(double power)
+void set_drive_power(double power)
 {
     drive_power = power;
-    moveCombined();
+    move_combined();
 }
 
 // =========================== Calculated Control =========================== //
@@ -106,15 +106,15 @@ void c_turn(int angle, int power)
 }
 
 // =============================== PID Control ============================== //
-PIDController turn_pid(0.2, 0.0003, 0.01, 20.0, &setTurnPower, &getHeading, 2, -1, 500, 20000);
-// PIDController turn_pid(0.2, 0.0008, 0.1, 20.0, &setTurnPower, &getHeading, 2, -1, 500, 5000);
+PIDController turn_pid(0.2, 0.0003, 0.01, 20.0, &set_turn_power, &getHeading, 2, -1, 500, 20000);
+// PIDController turn_pid(0.2, 0.0008, 0.1, 20.0, &set_turn_power, &getHeading, 2, -1, 500, 5000);
 //  PIDController turn_pid(0.001, 0, 0.00000000, 20.0, &turn, &getHeading, 2, -1, 500, false);
-PIDController drive_pid(0.6, 0.00001, 0.000000015, 20.0, &setDrivePower, &getDistance, 1, -1, 500);
-// PIDController left_pid(0.07, 0.00009, 0.000000015, 20.0, &setLeftPower, &getLeftDistance, 1, -1, 500);
-// PIDController right_pid(0.07, 0.00009, 0.000000015, 20.0, &setRightPower, &getRightDistance, 1, -1, 500);
+PIDController drive_pid(0.6, 0.00001, 0.000000015, 20.0, &set_drive_power, &getDistance, 1, -1, 500);
+// PIDController left_pid(0.07, 0.00009, 0.000000015, 20.0, &set_left_power, &getLeftDistance, 1, -1, 500);
+// PIDController right_pid(0.07, 0.00009, 0.000000015, 20.0, &set_right_power, &getRightDistance, 1, -1, 500);
 
 // PID turn "heading" degrees clockwise
-void turnRelative(double heading, bool blocking, double error_bound, double timeout)
+void turn_relative(double heading, bool blocking, double error_bound, double timeout)
 {
     turn_pid.set_error_bound(error_bound);
     turn_pid.set_timeout(timeout);
@@ -127,7 +127,7 @@ void turnRelative(double heading, bool blocking, double error_bound, double time
 }
 
 // PID drive "distance" inches straight
-void driveRelative(double distance, bool blocking)
+void drive_relative(double distance, bool blocking)
 {
     turn_pid.set_error_bound(0);
     turn_pid.set_timeout(-1);
@@ -143,12 +143,12 @@ void driveRelative(double distance, bool blocking)
     }
 }
 
-void startTurnTask()
+void start_turn_task()
 {
     turn_pid.run();
 }
 
-void startDriveTask()
+void start_drive_task()
 {
     drive_pid.run();
 }

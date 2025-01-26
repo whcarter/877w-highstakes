@@ -30,9 +30,9 @@ void right_auton()
     c_drive(6, 8);
     wait(1000, msec);
     intake.spin(forward, 12, volt);
-    turnRelative(-30);
-    driveRelative(24);
-    driveRelative(-48);
+    turn_relative(-30);
+    drive_relative(24);
+    drive_relative(-48);
     wait(1000, msec);
     intake.stop();
 }
@@ -73,27 +73,27 @@ void test_routine()
     // Right 90, 90, 180, Left 90, 270, 360
     std::cout << "------------------------------" << std::endl;
     /*
-    turnRelative(90);
+    turn_relative(90);
     wait(3000, msec);
-    turnRelative(90);
+    turn_relative(90);
     wait(3000, msec);
-    turnRelative(180);
+    turn_relative(180);
     wait(3000, msec);
-    turnRelative(-90);
+    turn_relative(-90);
     wait(3000, msec);
-    turnRelative(-270);
+    turn_relative(-270);
     wait(3000, msec);
-    turnRelative(-360);
+    turn_relative(-360);
     */
 
     // Forward 24, Back 12, 12, Forward 48
-    driveRelative(24);
+    drive_relative(24);
     wait(3000, msec);
-    driveRelative(-12);
+    drive_relative(-12);
     wait(3000, msec);
-    driveRelative(-12);
+    drive_relative(-12);
     wait(3000, msec);
-    driveRelative(48);
+    drive_relative(48);
 
     std::cout << "------------------------------" << std::endl;
 }

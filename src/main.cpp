@@ -26,8 +26,8 @@ void pre_auton(void)
   }
 
   thread tracking = thread(track_position);
-  thread turn_control = thread(startTurnTask);
-  thread drive_control = thread(startDriveTask);
+  thread turn_control = thread(start_turn_task);
+  thread drive_control = thread(start_drive_task);
 }
 
 void autonomous(void)
