@@ -33,57 +33,49 @@ double PIDController::calculate(double position)
     return (proportional * kP) + (integral * kI) + (derivative * kD);
 }
 
-// Sets a new target value
 void PIDController::set_target(double new_target)
 {
     target = new_target;
     start_time = millis();
 }
 
-// Returns current error
 double PIDController::get_error()
 {
     return error;
 }
 
-// Returns whether or not the loop is settled
 bool PIDController::running()
 {
-    return isRunning;
+    return is_running;
 }
 
-// Begins loop
 void PIDController::start()
 {
-    isRunning = true;
+    is_running = true;
     start_time = millis();
 }
 
-// Ends loop
 void PIDController::stop()
 {
     func(0);
-    isRunning = false;
+    is_running = false;
 }
 
-// Sets a new maximum error bound to exit loop
 void PIDController::set_error_bound(double error_bound)
 {
     bound = error_bound;
 }
 
-// Sets a new maximum runtime
 void PIDController::set_timeout(double max_time)
 {
     timeout = max_time;
 }
 
-// Calls action function with calculated power each cycle
 [[noreturn]] void PIDController::run()
 {
     while (true)
     {
-        while (isRunning)
+        while (is_running)
         {
             double position = current();
             double power = calculate(position);
@@ -109,8 +101,8 @@ void PIDController::set_timeout(double max_time)
                 {
                     stop();
                 }
-                isRunning = false;
-                std::cout << "Settle time: " << millis() - start_time << std::endl;
+                is_running = false;
+                // std::cout << "Settle time: " << millis() - start_time << std::endl;
             }
             if (timeout > 0 && (millis() - start_time) > timeout)
             {

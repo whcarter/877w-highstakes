@@ -1,12 +1,12 @@
 #include "main.h"
 
-Button::Button(void (*function)(bool), bool (*buttonPress)(), enum PressType t, enum Edge e, bool initial)
+Button::Button(void (*function)(bool), bool (*button_press)(), enum PressType press_type, enum Edge press_edge, bool initial_state)
 {
-    isPressed = buttonPress;
+    is_pressed = button_press;
     callback = function;
-    type = t;
-    edge = e;
-    state = initial;
+    type = press_type;
+    edge = press_edge;
+    state = initial_state;
 }
 
 void Button::find_press()
@@ -14,31 +14,31 @@ void Button::find_press()
     switch (edge)
     {
     case RISING:
-        if (isPressed() && !previous_press)
+        if (is_pressed() && !previous_press)
         {
             action();
         }
         break;
 
     case FALLING:
-        if (!isPressed() && previous_press)
+        if (!is_pressed() && previous_press)
         {
             action();
         }
         break;
 
     case CONTINUOUS:
-        if (isPressed() && !previous_press)
+        if (is_pressed() && !previous_press)
         {
             action();
         }
-        if (!isPressed() && previous_press)
+        if (!is_pressed() && previous_press)
         {
             action();
         }
         break;
     }
-    previous_press = isPressed();
+    previous_press = is_pressed();
 }
 
 void Button::action()
