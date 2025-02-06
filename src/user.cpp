@@ -49,7 +49,7 @@ void pressDown(bool state = false)
 	climb_power = climb_power < 0 ? 0 : -12;
 	climb.spin(forward, climb_power, volt);
 }
-void pressR2L2(bool state = false) { climb_release.set(true); }
+void pressR2L2(bool state = true) { climb_release.set(state); }
 
 bool bA() { return controller1.ButtonA.pressing(); }
 bool bB() { return controller1.ButtonB.pressing(); }
@@ -68,7 +68,7 @@ Button butR1 = Button(&pressR1, &bR1, PULSE, RISING);
 Button butL1 = Button(&pressL1, &bL1, PULSE, RISING);
 Button butUp = Button(&pressUp, &bUp, PULSE, RISING);
 Button butDown = Button(&pressDown, &bDown, PULSE, RISING);
-Button butR2L2 = Button(&pressR2L2, &bR2L2, PULSE, RISING);
+Button butR2L2 = Button(&pressR2L2, &bR2L2, TOGGLE, RISING);
 
 // ================================== Task ================================== //
 void user()
