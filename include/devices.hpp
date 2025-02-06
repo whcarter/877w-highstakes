@@ -24,6 +24,8 @@ extern motor_group climb;
 extern digital_out clamp;
 extern digital_out intake_lift;
 extern digital_out climb_release;
+extern digital_out hook_latch_left;
+extern digital_out hook_latch_right;
 
 extern inertial imu;
 extern gps gps_sensor;

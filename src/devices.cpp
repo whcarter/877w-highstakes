@@ -25,6 +25,8 @@ motor_group climb = motor_group(climb_left, climb_right);
 digital_out clamp = digital_out(Brain.ThreeWirePort.A);
 digital_out intake_lift = digital_out(Brain.ThreeWirePort.B);
 digital_out climb_release = digital_out(Brain.ThreeWirePort.C);
+digital_out hook_latch_left = digital_out(Brain.ThreeWirePort.D);
+digital_out hook_latch_right = digital_out(Brain.ThreeWirePort.E);
 
 // Sensors
 inertial imu = inertial(PORT1);

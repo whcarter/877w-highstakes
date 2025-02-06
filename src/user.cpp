@@ -49,10 +49,17 @@ void pressDown(bool state = false)
 	climb_power = climb_power < 0 ? 0 : -12;
 	climb.spin(forward, climb_power, volt);
 }
-void pressR2L2(bool state = true) { climb_release.set(state); }
+void pressR2L2(bool state = true) { 
+	climb_release.set(state); 
+}
+void pressY(bool state = false) {
+	hook_latch_left.set(state);
+	hook_latch_right.set(state);
+}
 
 bool bA() { return controller1.ButtonA.pressing(); }
 bool bB() { return controller1.ButtonB.pressing(); }
+bool bY() { return controller1.ButtonY.pressing(); }
 bool bR1() { return controller1.ButtonR1.pressing(); }
 bool bL1() { return controller1.ButtonL1.pressing(); }
 bool bUp() { return controller1.ButtonUp.pressing(); }
@@ -69,6 +76,7 @@ Button butL1 = Button(&pressL1, &bL1, PULSE, RISING);
 Button butUp = Button(&pressUp, &bUp, PULSE, RISING);
 Button butDown = Button(&pressDown, &bDown, PULSE, RISING);
 Button butR2L2 = Button(&pressR2L2, &bR2L2, TOGGLE, RISING);
+Button butY = Button(&pressY, &bY, TOGGLE, RISING);
 
 // ================================== Task ================================== //
 void user()
@@ -88,9 +96,10 @@ void user()
 	butUp.find_press();
 	butDown.find_press();
 	butR2L2.find_press();
+	butY.find_press();
 
 	// Reverse intake if past stall torque
-	if (intake.torque() > 1.1)
+	if (intake.torque() > 1.1 && fabs(intake.velocity(rpm)) < 1)
 	{
 		intake_jammed = true;
 		pressL1();
