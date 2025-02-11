@@ -49,10 +49,10 @@ void pressDown(bool state = false)
 	climb_power = climb_power < 0 ? 0 : -12;
 	climb.spin(forward, climb_power, volt);
 }
-void pressR2L2(bool state = true) { 
+void pressR2L2(bool state) { 
 	climb_release.set(state); 
 }
-void pressY(bool state = false) {
+void pressY(bool state) {
 	hook_latch_left.set(state);
 	hook_latch_right.set(state);
 }
