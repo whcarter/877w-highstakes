@@ -5,6 +5,7 @@
 
 extern brain Brain;
 extern controller controller1;
+extern controller controller2;
 
 extern motor driveLf;
 extern motor driveLb;

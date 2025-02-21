@@ -4,6 +4,7 @@
 
 brain Brain;
 controller controller1 = controller(primary);
+controller controller2 = controller(partner);
 
 // Motors
 motor driveLf = motor(PORT18, ratio18_1, true);
